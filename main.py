@@ -18,30 +18,40 @@ class Bank:
         print(f"An exception occurs as {err}")
 
     @staticmethod
-    def update():
+    def __update():
         with open(Bank.database, 'w') as fs:
             fs.write(json.dumps(Bank.data))
 
+    @classmethod
+    def __accountgenerate(cls):
+        alpha = random.choices(string.ascii_letters,k = 3)
+        num = random.choices(string.digits, k = 3)
+        spchar = random.choices("!@#$%^&*", k = 1)
+        id = alpha + num + spchar
+        random.shuffle(id)
+        return"".join(id) 
+
+         
     def createaccount(self):
-        data = {
+        info = {
             "name": input("What is your Name: "),
             "age": int(input("What is your Age: ")),
             "email": input("Write email: "),
             "pin": int(input("Write your 4 numbers pin code: ")),
-            "accountNo.": 1234,
+            "accountNo.": Bank.__accountgenerate(),
             "balance": 0
         }
-        if data['age'] < 18 or len(str(data['pin'])) != 4:
+        if info['age'] < 18 or len(str(info['pin'])) != 4:
             print("Sorry you cannot create your account")
         else:
             print("Account has been created successfully")
-            for i in data:
-                print(f"{i} : {data[i]}")
+            for i in info:
+                print(f"{i} : {info[i]}")
             print("note down your account number")
 
-            Bank.data.append()
+            Bank.data.append(info)
 
-            Bank.update(data)
+            Bank.__update()
 
 
 user = Bank()

@@ -55,9 +55,40 @@ class Bank:
 
     def depositmoney(self):
         accnumber = input("please tell your accounnt number: ")
-        pin = input("Tell your 4 number pin: ")
+        pin = int(input("Tell your 4 number pin: "))
 
-        print(Bank.data)
+        userdata = [i for i in Bank.data if i['accountNo.'] == accnumber and i['pin'] == pin]
+
+        if userdata == False:
+            print("Sorry o data found")
+
+        else:
+            amount =  int(input("How much you want to Depsit "))
+            if amount >   10000 or amount < 0:
+                print("Sorry the amount is too much you can deposite below 10,000 abd above 0")
+            else:
+                userdata[0]['balance'] += amount
+                Bank.__update()
+                print("Amount deposited successfully")
+
+    def withdrawmoney(self):
+        accnumber = input("please tell your accounnt number: ")
+        pin = int(input("Tell your 4 number pin: "))
+
+        userdata = [i for i in Bank.data if i['accountNo.'] == accnumber and i['pin'] == pin]
+
+        if userdata == False:
+            print("Sorry o data found")
+
+        else:
+            amount =  int(input("How much you want to Witdraw: "))
+            if userdata[0]['balance'] <  amount:
+                print("You don't have that much money" )
+              
+            else:
+                userdata[0]['balance'] -= amount
+                Bank.__update()
+                print("Amount Withdraw successfully")
 
 user = Bank()
 
@@ -75,3 +106,6 @@ if  check == 1:
 
 if check == 2:
     user.depositmoney()
+
+if check == 3:
+    user.withdrawmoney()
